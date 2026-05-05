@@ -302,8 +302,6 @@
       let moveHistory = [];      // [{ from, to, piece, captured, boardSnap, turn }]
       let movePairs = [];        // [{ w: 'e4', b: 'd5' }, …]
 
-      function squareToAN(sq) { return sq; }
-
       function resetState() {
         boardState = Object.assign({}, INIT_PIECES);
         selected = null;
@@ -356,9 +354,6 @@
             if (boardState[key]) sq.textContent = boardState[key];
             if (lastMove && (key === lastMove.from || key === lastMove.to)) sq.classList.add('last-move');
             if (selected === key) sq.classList.add('selected');
-            if (selected && selected !== key && boardState[key] && !isCurrentPlayer(boardState[key])) {
-              // will add capture hint when moves are computed — left simple here
-            }
             sq.addEventListener('click', () => handleSquareClick(key));
             board.appendChild(sq);
           });
@@ -462,7 +457,7 @@
         if (currentTurn === 'white') {
           movePairs.push({ w: an, b: '' });
         } else {
-          if (movePairs.length === 0) movePairs.push({ w: '…', b: an });
+          if (movePairs.length === 0) movePairs.push({ w: '--', b: an });
           else movePairs[movePairs.length - 1].b = an;
         }
 
