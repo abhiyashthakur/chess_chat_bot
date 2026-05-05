@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chess Chat Bot</title>
+    <title>Chess Board</title>
     <style>
-      /* ── Reset & base ── */
       *, *::before, *::after { box-sizing: border-box; }
+
       body {
         margin: 0;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -17,7 +17,7 @@
         flex-direction: column;
       }
 
-      /* ── Header ── */
+      /* Header */
       header {
         background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
         padding: 14px 24px;
@@ -25,43 +25,35 @@
         align-items: center;
         gap: 14px;
         box-shadow: 0 2px 12px rgba(0,0,0,0.4);
-        position: sticky;
-        top: 0;
-        z-index: 100;
       }
-      header .logo {
-        font-size: 28px;
-        line-height: 1;
-      }
+      header .logo { font-size: 30px; line-height: 1; }
       header h1 {
         margin: 0;
-        font-size: 1.4rem;
+        font-size: 1.5rem;
         font-weight: 700;
-        letter-spacing: 0.5px;
         color: #e2c96e;
-      }
-      header .subtitle {
-        font-size: 0.78rem;
-        color: #9ab0c8;
-        margin-top: 2px;
+        letter-spacing: 0.5px;
       }
 
-      /* ── Main layout ── */
+      /* Layout */
       .app-body {
         flex: 1;
         display: flex;
+        flex-wrap: wrap;
         align-items: flex-start;
         justify-content: center;
-        padding: 32px 20px;
+        gap: 20px;
+        padding: 28px 20px;
       }
 
-      /* ── Board panel ── */
+      /* Board panel */
       .board-panel {
         width: min(520px, 100%);
         display: flex;
         flex-direction: column;
         gap: 14px;
       }
+
       .panel-card {
         background: #16213e;
         border-radius: 12px;
@@ -69,45 +61,71 @@
         box-shadow: 0 4px 20px rgba(0,0,0,0.35);
       }
 
-      /* Chessboard grid */
+      /* Chessboard */
+      .board-wrap {
+        display: flex;
+        gap: 0;
+      }
+      .rank-labels {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        padding: 0 5px 0 0;
+        font-size: 11px;
+        font-weight: 600;
+        color: #9ab0c8;
+        user-select: none;
+        line-height: 1;
+      }
+      .rank-labels span { text-align: center; }
+      .board-col { flex: 1; display: flex; flex-direction: column; }
       .chessboard {
         display: grid;
         grid-template-columns: repeat(8, 1fr);
         grid-template-rows: repeat(8, 1fr);
         width: 100%;
         aspect-ratio: 1 / 1;
-        border-radius: 6px;
+        border-radius: 4px;
         overflow: hidden;
         border: 3px solid #0f3460;
-        box-shadow: 0 0 20px rgba(226,201,110,0.15);
+        box-shadow: 0 0 24px rgba(226,201,110,0.12);
       }
+      .file-labels {
+        display: flex;
+        justify-content: space-around;
+        padding: 4px 0 0;
+        font-size: 11px;
+        font-weight: 600;
+        color: #9ab0c8;
+        user-select: none;
+      }
+      .file-labels span { text-align: center; flex: 1; }
+
       .sq {
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: clamp(18px, 4vw, 40px);
+        font-size: clamp(16px, 3.8vw, 38px);
         cursor: pointer;
         user-select: none;
         position: relative;
         transition: filter 0.1s;
       }
-      .sq:hover { filter: brightness(1.15); }
-      .sq.selected { outline: 3px solid #e2c96e; outline-offset: -3px; }
-      .sq.highlight { background: rgba(226,201,110,0.45) !important; }
+      .sq:hover { filter: brightness(1.18); }
       .sq.light { background: #f0d9b5; }
       .sq.dark  { background: #b58863; }
-      .sq .coord {
+      .sq.selected { outline: 3px solid #e2c96e; outline-offset: -3px; z-index: 1; }
+      .sq.last-move { background: rgba(100,180,80,0.45) !important; }
+      .sq.capture-hint::after {
+        content: '';
         position: absolute;
-        font-size: 9px;
-        font-weight: 600;
-        opacity: 0.55;
-        bottom: 2px;
-        right: 3px;
+        inset: 0;
+        border: 3px solid rgba(220,60,60,0.75);
+        border-radius: 2px;
+        pointer-events: none;
       }
-      .sq.light .coord { color: #b58863; }
-      .sq.dark  .coord { color: #f0d9b5; }
 
-      /* Board controls */
+      /* Controls */
       .board-controls {
         display: flex;
         gap: 10px;
@@ -124,15 +142,8 @@
         transition: opacity 0.15s, transform 0.1s;
       }
       .btn:active { transform: scale(0.97); }
-      .btn-primary {
-        background: #e2c96e;
-        color: #1a1a2e;
-      }
-      .btn-secondary {
-        background: #0f3460;
-        color: #e0e0e0;
-        border: 1px solid #1e5c9e;
-      }
+      .btn-primary { background: #e2c96e; color: #1a1a2e; }
+      .btn-secondary { background: #0f3460; color: #e0e0e0; border: 1px solid #1e5c9e; }
       .btn:hover { opacity: 0.88; }
 
       /* Status bar */
@@ -140,84 +151,132 @@
         background: #0f3460;
         border-radius: 8px;
         padding: 10px 14px;
-        font-size: 0.83rem;
+        font-size: 0.84rem;
         color: #9ab0c8;
         display: flex;
         align-items: center;
         gap: 8px;
       }
       .status-dot {
-        width: 8px;
-        height: 8px;
+        width: 8px; height: 8px;
         border-radius: 50%;
         background: #4caf50;
         flex-shrink: 0;
         box-shadow: 0 0 6px #4caf5080;
+        transition: background 0.3s;
       }
+      .status-dot.black { background: #aaa; box-shadow: 0 0 6px #aaa4; }
 
-      /* ── Responsive: mobile ── */
+      /* Captured pieces & move log side panel */
+      .side-panel {
+        width: min(220px, 100%);
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .side-card {
+        background: #16213e;
+        border-radius: 12px;
+        padding: 14px 16px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+      }
+      .side-card h2 {
+        margin: 0 0 10px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: #e2c96e;
+      }
+      .captured-row {
+        font-size: 1.3rem;
+        min-height: 28px;
+        letter-spacing: 2px;
+        color: #ccc;
+        word-break: break-all;
+      }
+      .captured-row.black-captured { color: #555; filter: invert(1) brightness(0.65); }
+
+      .move-log {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        max-height: 260px;
+        overflow-y: auto;
+        font-size: 0.82rem;
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+      .move-log li {
+        display: flex;
+        gap: 6px;
+        color: #9ab0c8;
+      }
+      .move-log .move-num { color: #e2c96e; font-weight: 700; min-width: 22px; }
+      .move-log .move-w  { min-width: 52px; }
+      .move-log .move-b  { color: #aaa; }
+
       @media (max-width: 600px) {
-        .app-body { padding: 16px 10px; }
+        .app-body { padding: 14px 10px; }
+        .side-panel { width: 100%; }
       }
     </style>
-
-    <!-- Watson Assistant Chat integration -->
-    <script>
-      window.watsonAssistantChatOptions = {
-        integrationID: "d96fbca8-9da4-4a67-b36d-00fbe9ed83c9",
-        region: "jp-tok",
-        serviceInstanceID: "65e8343b-2d75-4314-9e42-e80f850be5b6",
-        onLoad: async (instance) => { await instance.render(); }
-      };
-
-      setTimeout(function () {
-        const t = document.createElement("script");
-        t.src =
-          "https://web-chat.global.assistant.watson.appdomain.cloud/versions/" +
-          (window.watsonAssistantChatOptions.clientVersion || "latest") +
-          "/WatsonAssistantChatEntry.js";
-        document.head.appendChild(t);
-      }, 0);
-    </script>
   </head>
   <body>
 
-    <!-- ══ Header ══ -->
     <header>
       <span class="logo">♟️</span>
-      <div>
-        <h1>Chess Chat Bot</h1>
-        <div class="subtitle">Ask me anything about chess — openings, strategy, puzzles &amp; more</div>
-      </div>
+      <h1>Chess Board</h1>
     </header>
 
-    <!-- ══ App body ══ -->
     <div class="app-body">
-      <div class="board-panel">
 
+      <!-- Board column -->
+      <div class="board-panel">
         <div class="panel-card">
-          <div class="chessboard" id="chessboard" aria-label="Chess board"></div>
+          <div class="board-wrap">
+            <div class="rank-labels" id="rank-labels"></div>
+            <div class="board-col">
+              <div class="chessboard" id="chessboard" aria-label="Chess board"></div>
+              <div class="file-labels" id="file-labels"></div>
+            </div>
+          </div>
         </div>
 
         <div class="panel-card">
           <div class="board-controls">
-            <button class="btn btn-primary" id="new-game-btn">♟ New Game</button>
+            <button class="btn btn-primary"   id="new-game-btn">♟ New Game</button>
             <button class="btn btn-secondary" id="flip-btn">⇅ Flip Board</button>
+            <button class="btn btn-secondary" id="undo-btn">↩ Undo</button>
           </div>
         </div>
 
         <div class="status-bar">
-          <span class="status-dot"></span>
-          <span id="game-status">White to move &mdash; standard starting position</span>
+          <span class="status-dot" id="status-dot"></span>
+          <span id="game-status">White to move — standard starting position</span>
         </div>
-
       </div>
-    </div><!-- /.app-body -->
+
+      <!-- Side panel -->
+      <div class="side-panel">
+        <div class="side-card">
+          <h2>Captured by White</h2>
+          <div class="captured-row" id="captured-by-white"></div>
+        </div>
+        <div class="side-card">
+          <h2>Captured by Black</h2>
+          <div class="captured-row black-captured" id="captured-by-black"></div>
+        </div>
+        <div class="side-card">
+          <h2>Move Log</h2>
+          <ul class="move-log" id="move-log"></ul>
+        </div>
+      </div>
+
+    </div>
 
     <script>
-      /* ──────────────────────────────────────────
-         Chessboard rendering & interaction
-      ────────────────────────────────────────── */
       const INIT_PIECES = {
         a8:'♜', b8:'♞', c8:'♝', d8:'♛', e8:'♚', f8:'♝', g8:'♞', h8:'♜',
         a7:'♟', b7:'♟', c7:'♟', d7:'♟', e7:'♟', f7:'♟', g7:'♟', h7:'♟',
@@ -228,26 +287,64 @@
       const WHITE_PIECES = new Set(['♙','♖','♘','♗','♕','♔']);
       const BLACK_PIECES = new Set(['♟','♜','♞','♝','♛','♚']);
 
+      const PIECE_NAMES = {
+        '♙':'P','♖':'R','♘':'N','♗':'B','♕':'Q','♔':'K',
+        '♟':'p','♜':'r','♞':'n','♝':'b','♛':'q','♚':'k',
+      };
+
       let flipped = false;
-      let boardState = {};   // square -> piece char
-      let selected = null;   // currently selected square key
+      let boardState = {};
+      let selected = null;
       let currentTurn = 'white';
+      let lastMove = null;       // { from, to }
+      let capturedByWhite = [];  // black pieces white captured
+      let capturedByBlack = [];  // white pieces black captured
+      let moveHistory = [];      // [{ from, to, piece, captured, boardSnap, turn }]
+      let movePairs = [];        // [{ w: 'e4', b: 'd5' }, …]
+
+      function squareToAN(sq) { return sq; }
 
       function resetState() {
         boardState = Object.assign({}, INIT_PIECES);
         selected = null;
         currentTurn = 'white';
+        lastMove = null;
+        capturedByWhite = [];
+        capturedByBlack = [];
+        moveHistory = [];
+        movePairs = [];
       }
 
       function isCurrentPlayer(piece) {
         return currentTurn === 'white' ? WHITE_PIECES.has(piece) : BLACK_PIECES.has(piece);
       }
 
-      function buildBoard(flip) {
+      function buildAxisLabels() {
+        const ranks = flipped ? [1,2,3,4,5,6,7,8] : [8,7,6,5,4,3,2,1];
+        const files  = flipped ? ['h','g','f','e','d','c','b','a'] : ['a','b','c','d','e','f','g','h'];
+
+        const rankEl = document.getElementById('rank-labels');
+        rankEl.innerHTML = '';
+        ranks.forEach(r => {
+          const s = document.createElement('span');
+          s.textContent = r;
+          rankEl.appendChild(s);
+        });
+
+        const fileEl = document.getElementById('file-labels');
+        fileEl.innerHTML = '';
+        files.forEach(f => {
+          const s = document.createElement('span');
+          s.textContent = f;
+          fileEl.appendChild(s);
+        });
+      }
+
+      function buildBoard() {
         const board = document.getElementById('chessboard');
         board.innerHTML = '';
-        const ranks = flip ? [1,2,3,4,5,6,7,8] : [8,7,6,5,4,3,2,1];
-        const files = flip ? ['h','g','f','e','d','c','b','a'] : ['a','b','c','d','e','f','g','h'];
+        const ranks = flipped ? [1,2,3,4,5,6,7,8] : [8,7,6,5,4,3,2,1];
+        const files  = flipped ? ['h','g','f','e','d','c','b','a'] : ['a','b','c','d','e','f','g','h'];
 
         ranks.forEach((rank, ri) => {
           files.forEach((file, fi) => {
@@ -256,83 +353,157 @@
             const isLight = (ri + fi) % 2 === 0;
             sq.className = 'sq ' + (isLight ? 'light' : 'dark');
             sq.dataset.square = key;
-
-            if (boardState[key]) {
-              sq.textContent = boardState[key];
+            if (boardState[key]) sq.textContent = boardState[key];
+            if (lastMove && (key === lastMove.from || key === lastMove.to)) sq.classList.add('last-move');
+            if (selected === key) sq.classList.add('selected');
+            if (selected && selected !== key && boardState[key] && !isCurrentPlayer(boardState[key])) {
+              // will add capture hint when moves are computed — left simple here
             }
-
-            if (ri === 7) {
-              const c = document.createElement('span');
-              c.className = 'coord';
-              c.textContent = file;
-              sq.appendChild(c);
-            }
-
             sq.addEventListener('click', () => handleSquareClick(key));
             board.appendChild(sq);
           });
         });
       }
 
-      function renderBoard() {
-        buildBoard(flipped);
-        if (selected) {
-          const el = document.querySelector(`[data-square="${selected}"]`);
-          if (el) el.classList.add('selected');
+      function renderAll() {
+        buildAxisLabels();
+        buildBoard();
+        updateCaptured();
+        updateMoveLog();
+        updateStatus();
+      }
+
+      function updateStatus() {
+        const dot = document.getElementById('status-dot');
+        const text = document.getElementById('game-status');
+        if (currentTurn === 'white') {
+          dot.className = 'status-dot';
+          text.textContent = 'White to move';
+        } else {
+          dot.className = 'status-dot black';
+          text.textContent = 'Black to move';
         }
+      }
+
+      function updateCaptured() {
+        document.getElementById('captured-by-white').textContent = capturedByWhite.join('');
+        document.getElementById('captured-by-black').textContent = capturedByBlack.join('');
+      }
+
+      function updateMoveLog() {
+        const ul = document.getElementById('move-log');
+        ul.innerHTML = '';
+        movePairs.forEach((pair, i) => {
+          const li = document.createElement('li');
+          li.innerHTML =
+            `<span class="move-num">${i + 1}.</span>` +
+            `<span class="move-w">${pair.w || ''}</span>` +
+            `<span class="move-b">${pair.b || ''}</span>`;
+          ul.appendChild(li);
+        });
+        ul.scrollTop = ul.scrollHeight;
+      }
+
+      function moveToAN(from, to, piece, captured) {
+        const p = PIECE_NAMES[piece] || '?';
+        const prefix = (p === 'P' || p === 'p') ? '' : p.toUpperCase();
+        const cap = captured ? 'x' : '';
+        return prefix + cap + to;
       }
 
       function handleSquareClick(key) {
         const piece = boardState[key];
 
         if (selected === null) {
-          // Select a piece belonging to the current player
           if (piece && isCurrentPlayer(piece)) {
             selected = key;
-            renderBoard();
+            buildBoard();
           }
           return;
         }
 
-        // Deselect if clicking the same square
         if (selected === key) {
           selected = null;
-          renderBoard();
+          buildBoard();
           return;
         }
 
-        // Re-select if clicking another own piece
         if (piece && isCurrentPlayer(piece)) {
           selected = key;
-          renderBoard();
+          buildBoard();
           return;
         }
 
-        // Move: place piece on target square
-        boardState[key] = boardState[selected];
+        // Execute move
+        const movingPiece = boardState[selected];
+        const capturedPiece = boardState[key];
+
+        // Save snapshot for undo
+        moveHistory.push({
+          from: selected, to: key,
+          piece: movingPiece, captured: capturedPiece,
+          boardSnap: Object.assign({}, boardState),
+          turn: currentTurn,
+          capturedByWhiteSnap: capturedByWhite.slice(),
+          capturedByBlackSnap: capturedByBlack.slice(),
+          movePairsSnap: JSON.parse(JSON.stringify(movePairs)),
+          lastMoveSnap: lastMove,
+        });
+
+        boardState[key] = movingPiece;
         delete boardState[selected];
+
+        if (capturedPiece) {
+          if (currentTurn === 'white') capturedByWhite.push(capturedPiece);
+          else capturedByBlack.push(capturedPiece);
+        }
+
+        const an = moveToAN(selected, key, movingPiece, capturedPiece);
+        if (currentTurn === 'white') {
+          movePairs.push({ w: an, b: '' });
+        } else {
+          if (movePairs.length === 0) movePairs.push({ w: '…', b: an });
+          else movePairs[movePairs.length - 1].b = an;
+        }
+
+        lastMove = { from: selected, to: key };
         selected = null;
         currentTurn = currentTurn === 'white' ? 'black' : 'white';
-        document.getElementById('game-status').textContent =
-          (currentTurn === 'white' ? 'White' : 'Black') + ' to move';
-        renderBoard();
+        renderAll();
       }
 
+      function undoMove() {
+        if (moveHistory.length === 0) return;
+        const snap = moveHistory.pop();
+        boardState       = snap.boardSnap;
+        currentTurn      = snap.turn;
+        capturedByWhite  = snap.capturedByWhiteSnap;
+        capturedByBlack  = snap.capturedByBlackSnap;
+        movePairs        = snap.movePairsSnap;
+        lastMove         = snap.lastMoveSnap;
+        selected         = null;
+        renderAll();
+      }
+
+      // Init
       resetState();
-      buildBoard(false);
+      renderAll();
 
       document.getElementById('flip-btn').addEventListener('click', () => {
         flipped = !flipped;
-        renderBoard();
+        renderAll();
       });
 
       document.getElementById('new-game-btn').addEventListener('click', () => {
         flipped = false;
         resetState();
-        buildBoard(false);
+        renderAll();
         document.getElementById('game-status').textContent =
-          'White to move \u2014 standard starting position';
+          'White to move — standard starting position';
+        document.getElementById('status-dot').className = 'status-dot';
       });
+
+      document.getElementById('undo-btn').addEventListener('click', undoMove);
     </script>
 
   </body>
