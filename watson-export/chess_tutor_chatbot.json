@@ -1,0 +1,984 @@
+{
+  "intents": [
+    {
+      "intent": "ask_checkmate",
+      "examples": [
+        {
+          "text": "how do I checkmate?"
+        },
+        {
+          "text": "winning strategies"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "ask_history",
+      "examples": [
+        {
+          "text": "origin of chess"
+        },
+        {
+          "text": "who invented chess?"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "ask_moves",
+      "examples": [
+        {
+          "text": "how does a knight move?"
+        },
+        {
+          "text": "rook moves?"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "ask_rules",
+      "examples": [
+        {
+          "text": "how do I castle?"
+        },
+        {
+          "text": "what are the rules of chess?"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "ask_tips",
+      "examples": [
+        {
+          "text": "give me chess tips"
+        },
+        {
+          "text": "how to improve?"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "end_game",
+      "examples": [
+        {
+          "text": "game over"
+        },
+        {
+          "text": "quit"
+        },
+        {
+          "text": "stop playing"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "greeting",
+      "examples": [
+        {
+          "text": "hello"
+        },
+        {
+          "text": "hey"
+        },
+        {
+          "text": "hi"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "start_game",
+      "examples": [
+        {
+          "text": "let’s play"
+        },
+        {
+          "text": "start chess"
+        }
+      ],
+      "description": ""
+    }
+  ],
+  "entities": [
+    {
+      "entity": "chess_term",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "castle",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "check",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "checkmate",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "en passant",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "stalemate",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "difficulty",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "easy",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "hard",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "medium",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "game_action",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "draw",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "resign",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "start",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "opening",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Caro-Kann",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "French",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "King’s Gambit",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "Sicilian",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "piece",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "bishop",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "king",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "knight",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "pawn",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "queen",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "rook",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "player_type",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "advanced",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "beginner",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "intermediate",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "result",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "draw",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "lose",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "win",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "time_control",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "blitz",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "classical",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "rapid",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    }
+  ],
+  "metadata": {
+    "api_version": {
+      "major_version": "v2",
+      "minor_version": "2018-11-08"
+    }
+  },
+  "dialog_nodes": [
+    {
+      "type": "standard",
+      "title": "Anything else",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Sorry, I didn’t understand. You can ask about moves, rules, or tips."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "anything_else",
+      "dialog_node": "Anything else",
+      "previous_sibling": "node_5_1777963362855",
+      "disambiguation_opt_out": true
+    },
+    {
+      "type": "standard",
+      "title": "Knight move",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "The knight moves in an L-shape."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#ask_moves && @piece:knight",
+      "dialog_node": "node_10_1777964058507",
+      "previous_sibling": "node_2_1777964030637"
+    },
+    {
+      "type": "standard",
+      "title": "Queen move",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "The queen moves in any direction."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#ask_moves && @piece:queen",
+      "dialog_node": "node_10_1777964199369",
+      "previous_sibling": "node_3_1777964163374"
+    },
+    {
+      "type": "standard",
+      "title": "General rules",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Chess is played on an 8x8 board with two players."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#ask_rules",
+      "dialog_node": "node_10_1777964325225",
+      "previous_sibling": "node_7_1777964276362"
+    },
+    {
+      "type": "standard",
+      "title": "Famous players",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Magnus Carlsen is a modern world champion."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#ask_history",
+      "dialog_node": "node_10_1777964849787",
+      "previous_sibling": "node_5_1777964825035"
+    },
+    {
+      "type": "standard",
+      "title": "Ask clarification",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Do you mean piece moves or rules?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "anything_else",
+      "dialog_node": "node_10_1777964930841",
+      "previous_sibling": "node_5_1777964909248"
+    },
+    {
+      "type": "standard",
+      "title": "Redirect to tips",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Would you like some chess tips?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "anything_else",
+      "dialog_node": "node_10_1777965012308",
+      "previous_sibling": "node_2_1777964996101"
+    },
+    {
+      "type": "standard",
+      "title": "Castling rule",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Castling is a move involving the king and rook."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#ask_rules && @chess_term:(castle)",
+      "dialog_node": "node_1_1777964363057",
+      "previous_sibling": "node_10_1777964325225"
+    },
+    {
+      "type": "standard",
+      "title": "Start game",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Game started! Choose your first move."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#start_game",
+      "dialog_node": "node_1_1777964505170",
+      "previous_sibling": "node_6_1777964450608"
+    },
+    {
+      "type": "standard",
+      "title": "Draw offer",
+      "conditions": "#end_game && @game_action:draw",
+      "dialog_node": "node_1_1777964598752",
+      "previous_sibling": "node_8_1777964558275"
+    },
+    {
+      "type": "standard",
+      "title": "Greeting redirect",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Welcome back! Try asking about a piece move."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "dialog_node": "node_2_1777964030637",
+      "previous_sibling": "node_8_1777963720448"
+    },
+    {
+      "type": "standard",
+      "title": "Rook move",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "The rook moves in straight lines."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#ask_moves && @piece:rook",
+      "dialog_node": "node_2_1777964126327",
+      "previous_sibling": "node_10_1777964058507"
+    },
+    {
+      "type": "standard",
+      "title": "Redirect to moves",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Do you want to know how pieces move?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "anything_else",
+      "dialog_node": "node_2_1777964996101",
+      "previous_sibling": "node_6_1777964979407"
+    },
+    {
+      "type": "standard",
+      "title": "Bishop move",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "The bishop moves diagonally."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#ask_moves && @piece:bishop",
+      "dialog_node": "node_3_1777964163374",
+      "previous_sibling": "node_2_1777964126327"
+    },
+    {
+      "type": "standard",
+      "title": "End game",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Thanks for playing. Goodbye!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#end_game",
+      "dialog_node": "node_3_1777964536363",
+      "previous_sibling": "node_1_1777964505170"
+    },
+    {
+      "type": "standard",
+      "title": "Intermediate tips",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Think two moves ahead."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#ask_tips && @player_type:intermediate",
+      "dialog_node": "node_3_1777964738884",
+      "previous_sibling": "node_9_1777964712503"
+    },
+    {
+      "type": "standard",
+      "title": "Advanced tips",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Study openings and endgames."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#ask_tips && @player_type:advanced",
+      "dialog_node": "node_3_1777964780383",
+      "previous_sibling": "node_3_1777964738884"
+    },
+    {
+      "type": "standard",
+      "title": "Restart game",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Restarting the game now."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#start_game && @game_action:start",
+      "dialog_node": "node_4_1777964634742",
+      "previous_sibling": "node_1_1777964598752"
+    },
+    {
+      "type": "standard",
+      "title": "Checkmate patterns",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Learn back-rank and smothered mate."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#ask_checkmate",
+      "dialog_node": "node_4_1777964806996",
+      "previous_sibling": "node_3_1777964780383"
+    },
+    {
+      "type": "standard",
+      "title": "Greeting fallback",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hi there! You can ask me about moves, rules, or tips."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#greeting",
+      "dialog_node": "node_5_1777963362855",
+      "previous_sibling": "node_10_1777965012308"
+    },
+    {
+      "type": "standard",
+      "title": "Origin of chess",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Chess originated in India around the 6th century."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#ask_history",
+      "dialog_node": "node_5_1777964825035",
+      "previous_sibling": "node_4_1777964806996"
+    },
+    {
+      "type": "standard",
+      "title": "Suggest intents",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "You can ask about moves, rules, or tips."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "anything_else",
+      "dialog_node": "node_5_1777964909248",
+      "previous_sibling": "node_6_1777964886412"
+    },
+    {
+      "type": "standard",
+      "title": "En passant rule",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "En passant is a special pawn capture."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#ask_rules && @chess_term:(en passant)",
+      "dialog_node": "node_6_1777964406569",
+      "previous_sibling": "node_1_1777964363057"
+    },
+    {
+      "type": "standard",
+      "title": "Stalemate rule",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Stalemate is when no legal moves exist but the king isn’t in check."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#ask_rules && @chess_term:stalemate",
+      "dialog_node": "node_6_1777964450608",
+      "previous_sibling": "node_6_1777964406569"
+    },
+    {
+      "type": "standard",
+      "title": "Default fallback",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Sorry, I didn’t understand."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "anything_else",
+      "dialog_node": "node_6_1777964886412",
+      "previous_sibling": "node_10_1777964849787"
+    },
+    {
+      "type": "standard",
+      "title": "Redirect to rules",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Maybe you want to know chess rules?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "anything_else",
+      "dialog_node": "node_6_1777964979407",
+      "previous_sibling": "node_10_1777964930841"
+    },
+    {
+      "type": "standard",
+      "title": "Pawn move",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "The pawn moves forward one square, captures diagonally."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#ask_moves && @piece:pawn",
+      "dialog_node": "node_7_1777964276362",
+      "previous_sibling": "node_9_1777964239265"
+    },
+    {
+      "type": "standard",
+      "title": "General hello",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hey! Want to learn chess basics?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#greeting",
+      "dialog_node": "node_8_1777963720448",
+      "previous_sibling": "Welcome"
+    },
+    {
+      "type": "standard",
+      "title": "Resign game",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "You resigned. Better luck next time."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#end_game && @game_action:resign",
+      "dialog_node": "node_8_1777964558275",
+      "previous_sibling": "node_3_1777964536363"
+    },
+    {
+      "type": "standard",
+      "title": "Time control",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Choose blitz, rapid, or classical."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#start_game && @time_control",
+      "dialog_node": "node_8_1777964669381",
+      "previous_sibling": "node_4_1777964634742"
+    },
+    {
+      "type": "standard",
+      "title": "King move",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "The king moves one square in any direction."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#ask_moves && @piece:king",
+      "dialog_node": "node_9_1777964239265",
+      "previous_sibling": "node_10_1777964199369"
+    },
+    {
+      "type": "standard",
+      "title": "Beginner tips",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Control the center and develop pieces."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#ask_tips && @player_type:beginner",
+      "dialog_node": "node_9_1777964712503",
+      "previous_sibling": "node_8_1777964669381"
+    },
+    {
+      "type": "standard",
+      "title": "Welcome",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hello! I’m your Chess Assistant. Ready to play?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "welcome",
+      "dialog_node": "Welcome"
+    }
+  ],
+  "counterexamples": [],
+  "system_settings": {
+    "off_topic": {
+      "enabled": true
+    },
+    "disambiguation": {
+      "prompt": "Did you mean:",
+      "enabled": true,
+      "randomize": true,
+      "max_suggestions": 5,
+      "suggestion_text_policy": "title",
+      "none_of_the_above_prompt": "None of the above",
+      "use_connect_to_support_prompt": "Connect to support",
+      "single_answer_clarification_prompt": "Something else"
+    },
+    "human_agent_assist": {
+      "prompt": "Did you mean:"
+    },
+    "spelling_auto_correct": true
+  },
+  "learning_opt_out": false,
+  "language": "en",
+  "description": "Helps users learn chess rules, moves, and gameplay basics.",
+  "name": "Chess Chat Bot"
+}
