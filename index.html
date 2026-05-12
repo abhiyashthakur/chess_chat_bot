@@ -238,6 +238,9 @@
 
       const chatScript = document.createElement("script");
       chatScript.src = "https://web-chat.global.assistant.watson.appdomain.cloud/versions/latest/WatsonAssistantChatEntry.js";
+      chatScript.onerror = () => {
+        console.error("Failed to load Watson Assistant chat script.");
+      };
       document.head.appendChild(chatScript);
     </script>
   </head>
