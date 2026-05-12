@@ -228,7 +228,11 @@
         region: "jp-tok",
         serviceInstanceID: "65e8343b-2d75-4314-9e42-e80f850be5b6",
         onLoad: async (instance) => {
-          await instance.render();
+          try {
+            await instance.render();
+          } catch (error) {
+            console.error("Watson Assistant failed to render:", error);
+          }
         }
       };
 
