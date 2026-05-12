@@ -236,16 +236,10 @@
         }
       };
 
-      const requestedVersion = window.watsonAssistantChatOptions.clientVersion;
-      const safeVersion =
-        typeof requestedVersion === "string" && /^[\w.-]+$/.test(requestedVersion)
-          ? requestedVersion
-          : "latest";
-
       const chatScript = document.createElement("script");
       chatScript.src =
         "https://web-chat.global.assistant.watson.appdomain.cloud/versions/" +
-        safeVersion +
+        "latest" +
         "/WatsonAssistantChatEntry.js";
       document.head.appendChild(chatScript);
     </script>
